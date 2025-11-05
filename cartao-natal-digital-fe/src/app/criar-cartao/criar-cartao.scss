@@ -1,0 +1,31 @@
+::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field.mdc-text-field--filled {
+  background-color: var(--bg-buttom);
+}
+
+mat-label{
+  color: rgb(118, 0, 0);
+}
+
+#inputText {
+  color: rgb(118, 0, 0);
+}
+
+.form{
+  display: flex;
+  flex-direction: column;
+  // min-width: 50%;
+  margin: auto;
+  width: 50em;
+  // flex-wrap: wrap;
+
+
+  .itens-form{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+
+    // .form-uf{
+    //   width: 12%;
+    // }
+  }
+}

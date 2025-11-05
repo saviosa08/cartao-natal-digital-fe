@@ -1,0 +1,88 @@
+<main>
+  <form [formGroup]="formCartao" class="form">
+    <mat-form-field class="example-form-field">
+      <mat-label>Seu Nome</mat-label>
+      <input id="inputText" matInput type="text"
+      formControlName="nome" />
+      @if (value) {
+      <button matSuffix matIconButton aria-label="Clear" (click)="value = ''">
+        <mat-icon>close</mat-icon>
+      </button>
+      }
+    </mat-form-field>
+
+    <div class="itens-form">
+      <mat-form-field style="width: 12%">
+        <mat-label>UF</mat-label>
+        <select matNativeControl formControlName="uf"
+        (change)="ufChange()">
+          <option value="" selected></option>
+          @for (uf of ufs; track uf) {
+          <option [value]="uf.sigla">{{ uf.sigla }}</option>
+          }
+        </select>
+      </mat-form-field>
+
+      <!-- <mat-form-field style="width: 28%">
+        <mat-label>Cidade</mat-label>
+        <select matNativeControl formControlName="cidade">
+          <option value="" selected></option>
+          @for (cidade of cidades; track cidade) {
+          <option [value]="cidade.id">{{ cidade.nome }}</option>
+          }
+        </select>
+      </mat-form-field> -->
+
+      <mat-form-field style="width: 28%">
+    <mat-label>Cidade</mat-label>
+    <input type="text"
+           matInput
+            formControlName="cidade"
+           [matAutocomplete]="auto"
+           (focus)="carregaCidades()"
+           >
+    <mat-autocomplete [requireSelection]="" autoActiveFirstOption
+    #auto="matAutocomplete">
+      @for (cidade of cidadesFiltradas | async; track cidade.id) {
+        <mat-option [value]="cidade.nome">{{cidade.nome}}</mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
+
+      <mat-form-field style="width: 60%">
+        <mat-label>E-mail</mat-label>
+        <input id="inputText" matInput type="email" formControlName="email" />
+        @if (value) {
+        <button matSuffix matIconButton aria-label="Clear" (click)="value = ''">
+          <mat-icon>close</mat-icon>
+        </button>
+        }
+      </mat-form-field>
+    </div>
+
+    <mat-form-field>
+      <mat-label>Nome do Remetente</mat-label>
+      <input id="inputText" matInput type="text" formControlName="remetente" />
+      @if (value) {
+      <button matSuffix matIconButton aria-label="Clear" (click)="value = ''">
+        <mat-icon>close</mat-icon>
+      </button>
+      }
+    </mat-form-field>
+
+    <mat-form-field class="example-form-field">
+      <mat-label>Seu Nome</mat-label>
+      <textarea
+        id="inputText"
+        matInput
+        type="textarea"
+        style="height: 150px"
+        formControlName="mensagem"
+      ></textarea>
+    </mat-form-field>
+  </form>
+
+  <button matButton="filled" (click)="onSubmit()">
+    <span>✨ Gerar meu cartão</span>
+  </button>
+</main>
