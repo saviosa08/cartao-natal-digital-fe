@@ -1,6 +1,6 @@
 <main>
   <form [formGroup]="formCartao" class="form">
-    <mat-form-field class="example-form-field">
+    <mat-form-field>
       <mat-label>Seu Nome</mat-label>
       <input id="inputText" matInput type="text"
       formControlName="nome" />
@@ -37,13 +37,14 @@
     <mat-label>Cidade</mat-label>
     <input type="text"
            matInput
-            formControlName="cidade"
+           [formControl]="cidadeForm"
            [matAutocomplete]="auto"
-           (focus)="carregaCidades()"
            >
-    <mat-autocomplete [requireSelection]="" autoActiveFirstOption
-    #auto="matAutocomplete">
-      @for (cidade of cidadesFiltradas | async; track cidade.id) {
+    <mat-autocomplete autoActiveFirstOption
+    #auto="matAutocomplete"
+    (optionSelected)="onCidadeSelecionada($event)"
+    (onSelectionChange)="limpaCidade()">
+      @for (cidade of cidadesFiltradas | async; track cidade.nome) {
         <mat-option [value]="cidade.nome">{{cidade.nome}}</mat-option>
       }
     </mat-autocomplete>
@@ -71,7 +72,7 @@
     </mat-form-field>
 
     <mat-form-field class="example-form-field">
-      <mat-label>Seu Nome</mat-label>
+      <mat-label>Mensagem</mat-label>
       <textarea
         id="inputText"
         matInput

@@ -7,8 +7,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import { CidadeServiceService } from '../services/cidadeService/cidade-service.service';
 import { Cidade, Uf } from '../interfaces/cidades';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import { map, Observable, startWith } from 'rxjs';
+import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import { Observable, map, startWith } from 'rxjs';
 
 
 @Component({
@@ -30,7 +30,9 @@ export class CriarCartao {
   ufs: Uf[] = [];
 
   cidades: Cidade[] = [];
-  cidadesFiltradas!: Observable<Cidade[]>;
+  cidadesFiltradas!: Observable<Cidade[]>
+  cidadeForm = new FormControl();
+  cidadeSelecionada!: string;
 
 
 
@@ -39,7 +41,7 @@ export class CriarCartao {
     this.formCartao = this.formBuilder.group({
       nome: new FormControl('', [Validators.required]),
       uf: new FormControl('', [Validators.required]),
-      cidade: new FormControl({ value: '', disabled: true }, [Validators.required]),
+      cidade: new FormControl({ value: this.cidadeForm, disabled: true }, [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       remetente: new FormControl('', [Validators.required]),
       mensagem: new FormControl('', [Validators.required]),
@@ -47,10 +49,34 @@ export class CriarCartao {
 
     this.carregaUfs();
 
-    this.cidadesFiltradas = this.formCartao.get('cidade')!.valueChanges.pipe(
+    this.cidadeForm.valueChanges.subscribe( vlr => {
+        this.cidadeSelecionada && vlr != this.cidadeSelecionada ?
+        this.formCartao.get('cidade')?.setValue('') :
+        false
+    });
+
+    // this.filtraCidades();
+    // this.cidadesFiltradas = this.formCartao.get('cidade')!.valueChanges.pipe(
+    //   startWith(''),
+    //   map(value => this._filterCidade(value || ''))
+    // );
+  }
+
+  // filter(): void {
+  //   const filterValue = this.formCartao.get('cidade')?.value;
+  //   console.log("Valor: ", filterValue);
+  //   this.cidadesFiltradas = this.cidades.filter(o => o.nome.toLowerCase().includes(filterValue));
+  // }
+
+  filtraCidades(){
+    this.cidadesFiltradas = this.cidadeForm.valueChanges.pipe(
       startWith(''),
       map(value => this._filterCidade(value || ''))
     );
+  }
+
+  limpaCidade(){
+    console.log("Cidade limpa!");
   }
 
    private _filterCidade(value: string){
@@ -67,13 +93,14 @@ export class CriarCartao {
     this.cidadeService.getUfs().subscribe((data: Uf[]) => {
         this.ufs = data;
         console.log(this.ufs);
-
       });
   }
 
   ufChange(){
     console.log("Valor: ",this.formCartao.get('uf')?.value);
     this.formCartao.get('cidade')?.reset();
+    this.cidadeForm.reset();
+    
     if(this.formCartao.get('uf')?.value){
       this.formCartao.get('cidade')?.enable();
     } else {
@@ -86,7 +113,13 @@ export class CriarCartao {
     this.cidadeService.getCidades(this.formCartao.get('uf')?.value).subscribe((data: Cidade[]) => {
         console.log(data);
         this.cidades = data;
+        this.filtraCidades();
       });
+  }
+
+  onCidadeSelecionada(event: MatAutocompleteSelectedEvent){
+    this.cidadeSelecionada = event.option.value;
+    this.formCartao.get('cidade')?.setValue(this.cidadeSelecionada);
   }
 
   onSubmit() {
