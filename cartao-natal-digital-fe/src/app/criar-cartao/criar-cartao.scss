@@ -28,4 +28,147 @@ mat-label{
     //   width: 12%;
     // }
   }
+
+  h2{
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+
+
+  .modelos-cartao{
+    // margin-top: 16px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+
+
+    .selecionado{
+      border: 3px solid red;
+      width: fit-content;
+    }
+
+    .modelo-cartao{
+      width: 250px;
+      border-radius: 10px;
+    }
+
+    button{
+      background-color: var(--bg-buttom);
+    }
+  }
+
+  /* Carousel styles */
+  .modelos-cartao {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 16px 0;
+
+  }
+
+  .modelo-efeito{
+    background-color: var(--bg-buttom);
+    width: fit-content;
+    margin: 16px auto;
+
+    .selecionado{
+      border: 3px solid red;
+    }
+  }
+
+
+
+
+
+  .carousel {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 8px 4px;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+
+  .carousel::-webkit-scrollbar { display: none; }
+
+  .carousel-item {
+    flex: 0 0 auto;
+    width: 220px; /* item width */
+  }
+
+  .carousel mat-card { width: 100%; }
+
+  .carousel-nav {
+    background: rgba(255,255,255,0.9);
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    cursor: pointer;
+    margin: 0 8px;
+  }
+
+  .carousel-nav:active { transform: scale(0.98); }
 }
+
+.preview {
+
+  h1{
+    text-align: center;
+    margin-top: 24px;
+  }
+  .cartao-preview{
+      position: relative;
+      display: inline-block;
+    img{
+      margin: auto;
+      display: block;
+      width: 80%;
+    }
+
+    .mensagem{
+      // font-weight: bolder;
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      text-align: justify;
+      transform: translate(-50%,-50%);
+      font-size: 24px;
+      line-height: normal;
+      color: white;
+      line-break: anywhere;
+      white-space: pre-line;
+    }
+
+    .feliz-natal{
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 32px;
+      font-weight: bold;
+      color: red;
+    }
+
+    .efeito{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: fit-content;
+      pointer-events: none;
+    }
+
+  }
+
+  }

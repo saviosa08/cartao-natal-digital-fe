@@ -1,0 +1,9 @@
+[
+  { "id": 0, "icone": "Nenhum", "nome": "Nenhum" },
+  { "id": 1, "icone": "❅", "nome": "Neve" },
+  { "id": 2, "icone": "🌟", "nome": "Brilho" },
+  { "id": 3, "icone": "☃️", "nome": "Boneco de Neve" },
+  { "id": 4, "icone": "🎄", "nome": "Natal" },
+  { "id": 5, "icone": "❤️", "nome": "Coração" },
+  { "id": 6, "icone": "❄️", "nome": "Floco Neve" }
+]

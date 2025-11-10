@@ -1,5 +1,5 @@
 import { CommonModule, AsyncPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import {MatInputModule} from '@angular/material/input';
 import { FormBuilder, FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
@@ -9,12 +9,18 @@ import { CidadeServiceService } from '../services/cidadeService/cidade-service.s
 import { Cidade, Uf } from '../interfaces/cidades';
 import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import { Observable, map, startWith } from 'rxjs';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatCardModule} from '@angular/material/card';
+import { EfeitoCartao, ModeloCartao } from '../interfaces/opcoesCartao';
+import { HttpClient } from '@angular/common/http';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { FlocosNeve } from "../flocos-neve/flocos-neve";
 
 
 @Component({
   selector: 'app-criar-cartao',
   standalone: true,
-  imports: [MatInputModule, FormsModule, MatIcon, MatButtonModule, MatSelectModule, ReactiveFormsModule, MatAutocompleteModule, CommonModule, AsyncPipe],
+  imports: [MatInputModule, FormsModule, MatIcon, MatButtonModule, MatSelectModule, ReactiveFormsModule, MatAutocompleteModule, CommonModule, AsyncPipe, MatGridListModule, MatCardModule, MatButtonToggleModule, FlocosNeve],
   templateUrl: './criar-cartao.html',
   styleUrl: './criar-cartao.scss',
 })
@@ -22,7 +28,8 @@ export class CriarCartao {
 
   constructor(
       private formBuilder: FormBuilder,
-      private cidadeService: CidadeServiceService
+      private cidadeService: CidadeServiceService,
+      private http: HttpClient
     ) {}
 
   formCartao!: FormGroup;
@@ -33,8 +40,20 @@ export class CriarCartao {
   cidadesFiltradas!: Observable<Cidade[]>
   cidadeForm = new FormControl();
   cidadeSelecionada!: string;
+  modelosCartao: ModeloCartao[] = [];
+  opcoesEfeito: EfeitoCartao[] = [];
+  cartaoSelecionado!: ModeloCartao;
+  opcaoSelecionada!: EfeitoCartao;
 
+  @ViewChild('carousel', { static: false }) carousel!: ElementRef<HTMLDivElement>;
 
+  // Scroll the carousel container left or right. direction: -1 (prev) or 1 (next)
+  scrollCarousel(direction: number) {
+    if (!this.carousel) return;
+    const el = this.carousel.nativeElement;
+    const scrollAmount = Math.round(el.clientWidth * 0.8);
+    el.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+  }
 
   ngOnInit() {
 
@@ -43,8 +62,10 @@ export class CriarCartao {
       uf: new FormControl('', [Validators.required]),
       cidade: new FormControl({ value: this.cidadeForm, disabled: true }, [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      remetente: new FormControl('', [Validators.required]),
+      destinatario: new FormControl('', [Validators.required]),
       mensagem: new FormControl('', [Validators.required]),
+      modeloSelecionado: new FormControl('', [Validators.required]),
+      efeitoSelecionado: new FormControl(0, [Validators.required]),
     });
 
     this.carregaUfs();
@@ -54,6 +75,17 @@ export class CriarCartao {
         this.formCartao.get('cidade')?.setValue('') :
         false
     });
+
+    this.http.get<ModeloCartao[]>('assets/data/modelos-cartao.json').subscribe(r => {
+      this.modelosCartao = r;
+      console.log(this.modelosCartao);
+    });
+    this.http.get<EfeitoCartao[]>('assets/data/efeito.json').subscribe(r => {
+      this.opcoesEfeito = r;
+      console.log(this.opcoesEfeito);
+    });
+
+
 
     // this.filtraCidades();
     // this.cidadesFiltradas = this.formCartao.get('cidade')!.valueChanges.pipe(
@@ -67,6 +99,18 @@ export class CriarCartao {
   //   console.log("Valor: ", filterValue);
   //   this.cidadesFiltradas = this.cidades.filter(o => o.nome.toLowerCase().includes(filterValue));
   // }
+
+  selecionarModelo(id:number){
+    console.log("Modelo selecionado: ", id);
+    this.formCartao.get('modeloSelecionado')?.setValue(id);
+    this.cartaoSelecionado = this.modelosCartao.find(m => m.id === this.formCartao.get('modeloSelecionado')?.value)!;
+  }
+
+  selecionarEfeito(id: number){
+    console.log("Efeito selecionado");
+    this.formCartao.get('efeitoSelecionado')?.setValue(id);
+    this.opcaoSelecionada = this.opcoesEfeito.find(e => e.id === this.formCartao.get('efeitoSelecionado')?.value)!;
+  }
 
   filtraCidades(){
     this.cidadesFiltradas = this.cidadeForm.valueChanges.pipe(
@@ -100,7 +144,7 @@ export class CriarCartao {
     console.log("Valor: ",this.formCartao.get('uf')?.value);
     this.formCartao.get('cidade')?.reset();
     this.cidadeForm.reset();
-    
+
     if(this.formCartao.get('uf')?.value){
       this.formCartao.get('cidade')?.enable();
     } else {

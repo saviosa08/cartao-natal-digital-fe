@@ -1,4 +1,8 @@
 <main>
+
+  <h1 style="text-align: center;">Crie o seu cartão</h1>
+
+
   <form [formGroup]="formCartao" class="form">
     <mat-form-field>
       <mat-label>Seu Nome</mat-label>
@@ -63,7 +67,7 @@
 
     <mat-form-field>
       <mat-label>Nome do Remetente</mat-label>
-      <input id="inputText" matInput type="text" formControlName="remetente" />
+      <input id="inputText" matInput type="text" formControlName="destinatario" />
       @if (value) {
       <button matSuffix matIconButton aria-label="Clear" (click)="value = ''">
         <mat-icon>close</mat-icon>
@@ -81,9 +85,89 @@
         formControlName="mensagem"
       ></textarea>
     </mat-form-field>
+
+    <!-- <mat-grid-list cols="1" rowHeight="200px" gutterSize="12px">
+      <mat-grid-tile *ngFor="let card of modelosCartao">
+
+
+
+      </mat-grid-tile>
+    </mat-grid-list>-->
+
+    <!-- (click)="scrollCarousel(-1) -->
+
+    <h2>Selecione o modelo do cartão</h2>
+
+    <section class="modelos-cartao">
+      <button type="button" class="carousel-nav prev" aria-label="Anterior" (click)="scrollCarousel(-1)">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <div class="carousel" #carousel>
+        @for (card of modelosCartao; track card.id) {
+            <!-- <div class="carousel-item"> -->
+              <!-- <mat-card
+
+                > -->
+                <img class="modelo-cartao"
+                [ngClass]="this.formCartao.get('modeloSelecionado')?.value == card.id ? 'selecionado': '' "
+                mat-card-image [src]="card.imagem" [alt]="card.nome"
+                (click)="selecionarModelo(card.id)"
+
+                >
+              <!-- </mat-card> -->
+            <!-- </div> -->
+            }
+      </div>
+      <button type="button" class="carousel-nav next" aria-label="Próximo" (click)="scrollCarousel(1)">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </section>
+
+    <h2>Selecione o efeito</h2>
+
+    <mat-button-toggle-group class="modelo-efeito" appearance="legacy">
+
+      <!-- <mat-button-toggle
+        [value]=0
+        (click)="selecionarEfeito(0)"
+        [ngClass]="this.formCartao.get('efeitoSelecionado')?.value == 0 ? 'selecionado': '' ">
+        Nenhum
+      </mat-button-toggle> -->
+      @for(efeito of opcoesEfeito; track efeito.id) {
+        <mat-button-toggle
+        [value]="efeito.id"
+        (click)="selecionarEfeito(efeito.id)"
+        [ngClass]="this.formCartao.get('efeitoSelecionado')?.value == efeito.id ? 'selecionado': '' "
+        >
+          {{ efeito.icone }}
+        </mat-button-toggle>
+      }
+    </mat-button-toggle-group>
   </form>
 
-  <button matButton="filled" (click)="onSubmit()">
+  @if(this.formCartao.get('modeloSelecionado')?.value && this.formCartao.valid){
+  <section class="preview">
+
+    <hr>
+
+    <h1>Veja como vai ficar</h1>
+
+    <div class="cartao-preview">
+      <app-flocos-neve [efeito]="opcaoSelecionada.id !== 0 ? opcaoSelecionada.icone : ''" class="efeito"></app-flocos-neve>
+      <img [src]="cartaoSelecionado?.imagem" [alt]="cartaoSelecionado?.nome">
+      <p class="mensagem">{{ formCartao.get('mensagem')?.value }}
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusaus magnam dicta maxime quas repellendus reiciendis nihiml assumenda, et magni ipsum odit blanditiis doloribus quasi, mollitia harum fugiat autem! Aspernatur, temporibus.
+        <br><br>
+        Com carinho, {{ formCartao.get('nome')?.value }}
+      </p>
+      <p class="feliz-natal">Feliz Natal!</p>
+
+    </div>
+  </section>
+  }
+
+
+  <button style=" display: block; margin: auto;" matButton="filled" (click)="onSubmit()">
     <span>✨ Gerar meu cartão</span>
   </button>
 </main>

@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "nome": "Modelo 1",
+    "imagem": "assets/modelos-cartao/modelo-1.png"
+  },
+  {
+    "id": 2,
+    "nome": "Modelo 2",
+    "imagem": "assets/modelos-cartao/modelo-2.png"
+  },
+  {
+    "id": 3,
+    "nome": "Modelo 3",
+    "imagem": "assets/modelos-cartao/img-capa.png"
+  },
+  {
+    "id": 4,
+    "nome": "Modelo 4",
+    "imagem": "assets/modelos-cartao/modelo-5.png"
+  },
+  {
+    "id": 5,
+    "nome": "Modelo 5",
+    "imagem": "assets/modelos-cartao/modelo-5.png"
+  },
+  {
+    "id": 6,
+    "nome": "Modelo 6",
+    "imagem": "assets/modelos-cartao/modelo-6.png"
+  },
+  {
+    "id": 8,
+    "nome": "Modelo 8",
+    "imagem": "assets/modelos-cartao/modelo-8.png"
+  }
+]
