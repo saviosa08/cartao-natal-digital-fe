@@ -1,24 +1,6 @@
 <main lang="pt-BR">
-  <nav role="navigation" aria-label="Main navigation">
-    <img src="../assets/logo.png" alt="Logo Cartão de Natal Digital">
 
-    <!-- Hamburger button for small screens -->
-    <button class="hamburger"
-            type="button"
-            (click)="toggleMenu()"
-            [attr.aria-expanded]="menuOpen"
-            aria-controls="main-nav"
-            aria-label="Abrir menu de navegação">
-      <mat-icon aria-hidden="true">menu</mat-icon>
-    </button>
-
-    <ul id="main-nav" [class.open]="menuOpen" [attr.aria-hidden]="!menuOpen">
-      <li><a href="/home" (click)="closeMenu()">Home</a></li>
-      <li><a href="#features-title" (click)="closeMenu()">Recursos</a></li>
-      <li><a href="#how-works" (click)="closeMenu()">Como Funciona</a></li>
-      <li><a href="#faq" (click)="closeMenu()">Perguntas Frequentes</a></li>
-    </ul>
-  </nav>
+  <app-nav-bar></app-nav-bar>
   <header>
     <app-flocos-neve></app-flocos-neve>
     <section>
@@ -166,40 +148,7 @@
     </div>
   </section>
 
-  <footer class="trust" aria-label="Selo de confiança e informações de pagamento">
-
-    <div class="navbar">
-      <img src="../assets/logo.png" alt="Logo Cartão de Natal Digital">
-      <ul>
-        <li class="title">NAVEGAR</li>
-        <li><a href="/home">Home</a></li>
-        <li><a href="#features-title">Por que escolher o Cartão de Natal Digital?</a></li>
-        <li><a href="#how-works">Como funciona</a></li>
-        <li><a href="#faq-title">FAQ</a></li>
-        <li><a href="/criar-cartao">Criar meu cartão</a></li>
-      </ul>
-      <!-- <p>✅ Personalizado  |  💳 Pagamento seguro  |  🎁 Entrega instantânea</p> -->
-      <div class="sociais">
-        <p class="text-social">Redes Sociais</p>
-        <ul class="social">
-        <li>
-          <a href="https://www.instagram.com/"><img src="../assets/instagram.png" alt="logo-instagram"></a>
-        </li>
-        <li>
-          <a href="https://www.facebook.com/"><img src="../assets/facebook.png" alt="logo-facebook"></a>
-        </li>
-        <li>
-          <a href="https://www.whatsapp.com/"><img src="../assets/whatsapp.png" alt="logo-whatsapp"></a>
-        </li>
-      </ul>
-      </div>
-
-    </div>
-    <div class="footer">
-      <hr>
-      <p>&copy; 2024 Cartão de Natal Digital. Todos os direitos reservados.</p>
-    </div>
-  </footer>
+  <app-footer></app-footer>
 
   <script type="application/ld+json">
   {

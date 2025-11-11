@@ -1,7 +1,7 @@
+<app-nav-bar></app-nav-bar>
 <main>
-
+  
   <h1 style="text-align: center;">Crie o seu cartão</h1>
-
 
   <form [formGroup]="formCartao" class="form">
     <mat-form-field>
@@ -154,12 +154,17 @@
 
     <div class="cartao-preview">
       <app-flocos-neve [efeito]="opcaoSelecionada.id !== 0 ? opcaoSelecionada.icone : ''" class="efeito"></app-flocos-neve>
-      <img [src]="cartaoSelecionado?.imagem" [alt]="cartaoSelecionado?.nome">
-      <p class="mensagem">{{ formCartao.get('mensagem')?.value }}
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusaus magnam dicta maxime quas repellendus reiciendis nihiml assumenda, et magni ipsum odit blanditiis doloribus quasi, mollitia harum fugiat autem! Aspernatur, temporibus.
+      <img [src]="cartaoSelecionado.imagem" [alt]="cartaoSelecionado.nome">
+      <p class="mensagem">
+        Querido(a) <span class="nome-destinatario">{{ formCartao.get('destinatario')?.value }}</span>
+        <br>
+        {{ formCartao.get('mensagem')?.value }}
         <br><br>
-        Com carinho, {{ formCartao.get('nome')?.value }}
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusaus magnam dicta maxime quas repellendus reiciendis nihiml assumenda, et magni ipsum odit blanditiis doloribus quasi, mollitia harum fugiat autem! Aspernatur, temporibus.
+        <br>
+        Com carinho, <span class="nome">{{ formCartao.get('nome')?.value }}</span>
       </p>
+      <br>
       <p class="feliz-natal">Feliz Natal!</p>
 
     </div>
@@ -167,7 +172,8 @@
   }
 
 
-  <button style=" display: block; margin: auto;" matButton="filled" (click)="onSubmit()">
+  <button class="btn-finalizar" style=" display: block; margin: auto;" matButton="filled" (click)="onSubmit()">
     <span>✨ Gerar meu cartão</span>
   </button>
 </main>
+<app-footer></app-footer>

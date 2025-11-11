@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import { FlocosNeve } from "../flocos-neve/flocos-neve";
 import {MatIconModule} from '@angular/material/icon';
+import { NavBar } from "../nav-bar/nav-bar";
+import { Footer } from "../footer/footer";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, FlocosNeve, MatIconModule],
+  imports: [CommonModule, MatButtonModule, FlocosNeve, MatIconModule, NavBar, Footer],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })

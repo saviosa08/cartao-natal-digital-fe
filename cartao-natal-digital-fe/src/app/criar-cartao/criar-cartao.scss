@@ -81,10 +81,6 @@ mat-label{
     }
   }
 
-
-
-
-
   .carousel {
     display: flex;
     gap: 12px;
@@ -122,18 +118,33 @@ mat-label{
 }
 
 .preview {
-
+  margin-bottom: 32px;
   h1{
     text-align: center;
     margin-top: 24px;
   }
   .cartao-preview{
       position: relative;
-      display: inline-block;
-    img{
-      margin: auto;
-      display: block;
+      // display: inline-block;
+      overflow: hidden; /* Corta o excesso de zoom */
       width: 80%;
+      margin: auto;
+    img{
+      // margin: auto;
+      // display: block;
+      width: 100%;
+      object-fit: cover;
+      /* Aplica a animação no elemento img */
+      animation: imageZoom 30s infinite alternate;
+    }
+
+    @keyframes imageZoom {
+      0% {
+          transform: scale(1.05) translate(0%, 0%);
+      }
+      100% {
+          transform: scale(1.15) translate(5%, 5%);
+      }
     }
 
     .mensagem{
@@ -169,6 +180,68 @@ mat-label{
       pointer-events: none;
     }
 
+    .mensagem{
+      font-family: 'Merriweather Sans', sans-serif;
+      font-weight: 200;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+      color: #F8F8F8;
+    }
+
+    .nome, .nome-destinatario, .feliz-natal{
+      font-family: 'Great Vibes', cursive;
+      font-optical-sizing: auto;
+      font-weight: 400;
+      font-style: normal;
+
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    .mensagem{
+      font-size: 1.5rem;
+    }
+
+    .nome, .nome-destinatario{
+      font-size: 2.5rem;
+      color: #F8F8F8;
+      margin-left: 16px;
+    }
+
+    .feliz-natal{
+      margin-top: 32px;
+      color: #FFD700;
+      font-size: 4.5em;
+      // color: #F0E68C ;
+      // color: #B22222 ;
+      // color: #8B0000 ;
+    }
+
   }
+  }
+
+  @media (max-width: 1024px){
+    .preview {
+
+      .cartao-preview{
+        width: 95%;
+        .mensagem{
+          width: 80%;
+          font-size: 0.8rem;
+        }
+        .nome, .nome-destinatario{
+          font-size: 1.2rem;
+          color: #F8F8F8;
+          margin-left: 16px;
+        }
+
+        .feliz-natal{
+          margin-top: 32px;
+          color: #FFD700;
+          font-size: 1.5rem;
+          // color: #F0E68C ;
+          // color: #B22222 ;
+          // color: #8B0000 ;
+        }
+      }
+    }
 
   }

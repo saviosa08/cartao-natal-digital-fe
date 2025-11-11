@@ -15,12 +15,14 @@ import { EfeitoCartao, ModeloCartao } from '../interfaces/opcoesCartao';
 import { HttpClient } from '@angular/common/http';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import { FlocosNeve } from "../flocos-neve/flocos-neve";
+import { NavBar } from "../nav-bar/nav-bar";
+import { Footer } from "../footer/footer";
 
 
 @Component({
   selector: 'app-criar-cartao',
   standalone: true,
-  imports: [MatInputModule, FormsModule, MatIcon, MatButtonModule, MatSelectModule, ReactiveFormsModule, MatAutocompleteModule, CommonModule, AsyncPipe, MatGridListModule, MatCardModule, MatButtonToggleModule, FlocosNeve],
+  imports: [MatInputModule, FormsModule, MatIcon, MatButtonModule, MatSelectModule, ReactiveFormsModule, MatAutocompleteModule, CommonModule, AsyncPipe, MatGridListModule, MatCardModule, MatButtonToggleModule, FlocosNeve, NavBar, Footer],
   templateUrl: './criar-cartao.html',
   styleUrl: './criar-cartao.scss',
 })
@@ -67,6 +69,18 @@ export class CriarCartao {
       modeloSelecionado: new FormControl('', [Validators.required]),
       efeitoSelecionado: new FormControl(0, [Validators.required]),
     });
+
+    this.formCartao = this.formBuilder.group({
+      nome: 'Joao',
+      uf: 'ES',
+      cidade: 'Cariacica',
+      email: 'saa@b.com.br',
+      destinatario: 'Maria',
+      mensagem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      modeloSelecionado: '1',
+      efeitoSelecionado: '1'
+    })
+
 
     this.carregaUfs();
 
