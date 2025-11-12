@@ -1,69 +1,80 @@
 <app-nav-bar></app-nav-bar>
 <main>
-  
-  <h1 style="text-align: center;">Crie o seu cartão</h1>
+  <h1 style="text-align: center">Crie o seu cartão premium</h1>
 
   <form [formGroup]="formCartao" class="form">
+    <h2>Selecione o modelo</h2>
+
+    <section class="modelos-cartao">
+      <button
+        type="button"
+        class="carousel-nav prev"
+        aria-label="Anterior"
+        (click)="scrollCarousel(-1)"
+      >
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <div class="carousel" #carousel>
+        @for (card of modelosCartao; track card.id) {
+        <!-- <div class="carousel-item"> -->
+        <!-- <mat-card
+
+                > -->
+        <img
+          class="modelo-cartao"
+          [ngClass]="
+            this.formCartao.get('modeloSelecionado')?.value == card.id ? 'selecionado' : ''
+          "
+          mat-card-image
+          [src]="card.imagem"
+          [alt]="card.nome"
+          (click)="selecionarModelo(card.id)"
+        />
+        <!-- </mat-card> -->
+        <!-- </div> -->
+        }
+      </div>
+      <button
+        type="button"
+        class="carousel-nav next"
+        aria-label="Próximo"
+        (click)="scrollCarousel(1)"
+      >
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </section>
+
+    <h2>Selecione o efeito</h2>
+
+    <mat-button-toggle-group class="modelo-efeito" appearance="legacy">
+      <!-- <mat-button-toggle
+        [value]=0
+        (click)="selecionarEfeito(0)"
+        [ngClass]="this.formCartao.get('efeitoSelecionado')?.value == 0 ? 'selecionado': '' ">
+        Nenhum
+      </mat-button-toggle> -->
+      @for(efeito of opcoesEfeito; track efeito.id) {
+      <mat-button-toggle
+        [value]="efeito.id"
+        (click)="selecionarEfeito(efeito.id)"
+        [ngClass]="
+          this.formCartao.get('efeitoSelecionado')?.value == efeito.id ? 'selecionado' : ''
+        "
+      >
+        {{ efeito.icone }}
+      </mat-button-toggle>
+      }
+    </mat-button-toggle-group>
+
     <mat-form-field>
       <mat-label>Seu Nome</mat-label>
-      <input id="inputText" matInput type="text"
-      formControlName="nome" />
+      <input id="inputText" matInput type="text" formControlName="nome" />
       @if (value) {
       <button matSuffix matIconButton aria-label="Clear" (click)="value = ''">
         <mat-icon>close</mat-icon>
       </button>
       }
     </mat-form-field>
-
-    <div class="itens-form">
-      <mat-form-field style="width: 12%">
-        <mat-label>UF</mat-label>
-        <select matNativeControl formControlName="uf"
-        (change)="ufChange()">
-          <option value="" selected></option>
-          @for (uf of ufs; track uf) {
-          <option [value]="uf.sigla">{{ uf.sigla }}</option>
-          }
-        </select>
-      </mat-form-field>
-
-      <!-- <mat-form-field style="width: 28%">
-        <mat-label>Cidade</mat-label>
-        <select matNativeControl formControlName="cidade">
-          <option value="" selected></option>
-          @for (cidade of cidades; track cidade) {
-          <option [value]="cidade.id">{{ cidade.nome }}</option>
-          }
-        </select>
-      </mat-form-field> -->
-
-      <mat-form-field style="width: 28%">
-    <mat-label>Cidade</mat-label>
-    <input type="text"
-           matInput
-           [formControl]="cidadeForm"
-           [matAutocomplete]="auto"
-           >
-    <mat-autocomplete autoActiveFirstOption
-    #auto="matAutocomplete"
-    (optionSelected)="onCidadeSelecionada($event)"
-    (onSelectionChange)="limpaCidade()">
-      @for (cidade of cidadesFiltradas | async; track cidade.nome) {
-        <mat-option [value]="cidade.nome">{{cidade.nome}}</mat-option>
-      }
-    </mat-autocomplete>
-  </mat-form-field>
-
-      <mat-form-field style="width: 60%">
-        <mat-label>E-mail</mat-label>
-        <input id="inputText" matInput type="email" formControlName="email" />
-        @if (value) {
-        <button matSuffix matIconButton aria-label="Clear" (click)="value = ''">
-          <mat-icon>close</mat-icon>
-        </button>
-        }
-      </mat-form-field>
-    </div>
 
     <mat-form-field>
       <mat-label>Nome do Remetente</mat-label>
@@ -95,84 +106,84 @@
     </mat-grid-list>-->
 
     <!-- (click)="scrollCarousel(-1) -->
-
-    <h2>Selecione o modelo do cartão</h2>
-
-    <section class="modelos-cartao">
-      <button type="button" class="carousel-nav prev" aria-label="Anterior" (click)="scrollCarousel(-1)">
-        <mat-icon>chevron_left</mat-icon>
-      </button>
-      <div class="carousel" #carousel>
-        @for (card of modelosCartao; track card.id) {
-            <!-- <div class="carousel-item"> -->
-              <!-- <mat-card
-
-                > -->
-                <img class="modelo-cartao"
-                [ngClass]="this.formCartao.get('modeloSelecionado')?.value == card.id ? 'selecionado': '' "
-                mat-card-image [src]="card.imagem" [alt]="card.nome"
-                (click)="selecionarModelo(card.id)"
-
-                >
-              <!-- </mat-card> -->
-            <!-- </div> -->
-            }
-      </div>
-      <button type="button" class="carousel-nav next" aria-label="Próximo" (click)="scrollCarousel(1)">
-        <mat-icon>chevron_right</mat-icon>
-      </button>
-    </section>
-
-    <h2>Selecione o efeito</h2>
-
-    <mat-button-toggle-group class="modelo-efeito" appearance="legacy">
-
-      <!-- <mat-button-toggle
-        [value]=0
-        (click)="selecionarEfeito(0)"
-        [ngClass]="this.formCartao.get('efeitoSelecionado')?.value == 0 ? 'selecionado': '' ">
-        Nenhum
-      </mat-button-toggle> -->
-      @for(efeito of opcoesEfeito; track efeito.id) {
-        <mat-button-toggle
-        [value]="efeito.id"
-        (click)="selecionarEfeito(efeito.id)"
-        [ngClass]="this.formCartao.get('efeitoSelecionado')?.value == efeito.id ? 'selecionado': '' "
-        >
-          {{ efeito.icone }}
-        </mat-button-toggle>
-      }
-    </mat-button-toggle-group>
   </form>
 
   @if(this.formCartao.get('modeloSelecionado')?.value && this.formCartao.valid){
   <section class="preview">
 
-    <hr>
-
     <h1>Veja como vai ficar</h1>
 
     <div class="cartao-preview">
-      <app-flocos-neve [efeito]="opcaoSelecionada.id !== 0 ? opcaoSelecionada.icone : ''" class="efeito"></app-flocos-neve>
-      <img [src]="cartaoSelecionado.imagem" [alt]="cartaoSelecionado.nome">
+      <app-flocos-neve
+        [efeito]="opcaoSelecionada.id !== 0 ? opcaoSelecionada.icone : ''"
+        class="efeito"
+      ></app-flocos-neve>
+      <img [src]="cartaoSelecionado.imagem" [alt]="cartaoSelecionado.nome" />
       <p class="mensagem">
-        Querido(a) <span class="nome-destinatario">{{ formCartao.get('destinatario')?.value }}</span>
-        <br>
+        Querido(a)
+        <span class="nome-destinatario">{{ formCartao.get('destinatario')?.value }}</span>
+        <br />
         {{ formCartao.get('mensagem')?.value }}
-        <br><br>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusaus magnam dicta maxime quas repellendus reiciendis nihiml assumenda, et magni ipsum odit blanditiis doloribus quasi, mollitia harum fugiat autem! Aspernatur, temporibus.
-        <br>
+        <br /><br />
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusaus magnam dicta maxime quas
+        repellendus reiciendis nihiml assumenda, et magni ipsum odit blanditiis doloribus quasi,
+        mollitia harum fugiat autem! Aspernatur, temporibus.
+        <br />
         Com carinho, <span class="nome">{{ formCartao.get('nome')?.value }}</span>
       </p>
-      <br>
+      <br />
       <p class="feliz-natal">Feliz Natal!</p>
-
     </div>
   </section>
   }
 
+  <!-- <div class="itens-form">
+    <mat-form-field style="width: 60%">
+        <mat-label>E-mail</mat-label>
+        <input id="inputText" matInput type="email" formControlName="email" />
+        @if (value) {
+        <button matSuffix matIconButton aria-label="Clear" (click)="value = ''">
+          <mat-icon>close</mat-icon>
+        </button>
+        }
+    </mat-form-field>
 
-  <button class="btn-finalizar" style=" display: block; margin: auto;" matButton="filled" (click)="onSubmit()">
+    <div class="estado-cidade">
+      <mat-form-field style="width: 12%">
+          <mat-label>UF</mat-label>
+          <select matNativeControl formControlName="uf" (change)="ufChange()">
+            <option value="" selected></option>
+            @for (uf of ufs; track uf) {
+            <option [value]="uf.sigla">{{ uf.sigla }}</option>
+            }
+          </select>
+        </mat-form-field>
+
+        <mat-form-field style="width: 28%">
+          <mat-label>Cidade</mat-label>
+          <input type="text" matInput [formControl]="cidadeForm" [matAutocomplete]="auto" />
+          <mat-autocomplete
+            autoActiveFirstOption
+            #auto="matAutocomplete"
+            (optionSelected)="onCidadeSelecionada($event)"
+            (onSelectionChange)="limpaCidade()"
+          >
+            @for (cidade of cidadesFiltradas | async; track cidade.nome) {
+            <mat-option [value]="cidade.nome">{{ cidade.nome }}</mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+    </div>
+
+
+    </div> -->
+
+  <button
+    class="btn-finalizar"
+    style="display: block; margin: auto"
+    matButton="filled"
+    (click)="onSubmit()"
+  >
     <span>✨ Gerar meu cartão</span>
   </button>
 </main>

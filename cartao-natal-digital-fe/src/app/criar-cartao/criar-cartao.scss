@@ -3,11 +3,11 @@
 }
 
 mat-label{
-  color: rgb(118, 0, 0);
+  color: var(--color-verm-destaque);
 }
 
 #inputText {
-  color: rgb(118, 0, 0);
+  color: var(--color-verm-destaque);
 }
 
 .form{
@@ -27,6 +27,12 @@ mat-label{
     // .form-uf{
     //   width: 12%;
     // }
+
+    .estado-cidade{
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+    }
   }
 
   h2{
@@ -48,7 +54,7 @@ mat-label{
 
 
     .selecionado{
-      border: 3px solid red;
+      border: 3px solid var(--color-verm-destaque);
       width: fit-content;
     }
 
@@ -77,7 +83,7 @@ mat-label{
     margin: 16px auto;
 
     .selecionado{
-      border: 3px solid red;
+      border: 3px solid var(--color-verm-destaque);
     }
   }
 
@@ -119,6 +125,13 @@ mat-label{
 
 .preview {
   margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+  app-flocos-neve {
+    // overflow: hidden;
+    position: fixed;
+    margin-top: -25%;
+  }
   h1{
     text-align: center;
     margin-top: 24px;
@@ -168,7 +181,7 @@ mat-label{
       transform: translateX(-50%);
       font-size: 32px;
       font-weight: bold;
-      color: red;
+      // color: var(--color-verm-destaque);
     }
 
     .efeito{
