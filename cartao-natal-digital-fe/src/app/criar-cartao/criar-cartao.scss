@@ -15,7 +15,8 @@ mat-label{
   flex-direction: column;
   // min-width: 50%;
   margin: auto;
-  width: 50em;
+  max-width: 50em;
+  width: 80%;
   // flex-wrap: wrap;
 
 
@@ -87,6 +88,22 @@ mat-label{
     }
   }
 
+  .dest-rem{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+
+    .form-dest-rem{
+      width: 100%;
+    }
+  }
+
+  .example-form-field{
+    // background-color: red;
+    // padding: 10px;
+    width: 100%;
+  }
+
   .carousel {
     display: flex;
     gap: 12px;
@@ -127,6 +144,9 @@ mat-label{
   margin-bottom: 32px;
   position: relative;
   overflow: hidden;
+  margin: auto;
+  max-width: 50em;
+  width: 80%;
   app-flocos-neve {
     // overflow: hidden;
     position: fixed;
@@ -140,12 +160,16 @@ mat-label{
       position: relative;
       // display: inline-block;
       overflow: hidden; /* Corta o excesso de zoom */
-      width: 80%;
+      // max-width: 50em;
+      // width: 80%;
       margin: auto;
+      max-width: 50em;
+      width: 80%;
     img{
       // margin: auto;
       // display: block;
-      width: 100%;
+      max-width: 50em;
+      width: 80%;
       object-fit: cover;
       /* Aplica a animação no elemento img */
       animation: imageZoom 30s infinite alternate;
@@ -232,10 +256,22 @@ mat-label{
   }
 
   @media (max-width: 1024px){
-    .preview {
+    .form {
+      width: 80%;
+      .modelos-cartao{
 
+        .modelo-cartao{
+          width: 150px;
+
+        }
+      }
+    }
+    
+    .preview {
+      
       .cartao-preview{
-        width: 95%;
+        // max-width: 50em;
+        // width: 80%;
         .mensagem{
           width: 80%;
           font-size: 0.8rem;
