@@ -70,16 +70,16 @@ export class CriarCartao {
       efeitoSelecionado: new FormControl(0, [Validators.required]),
     });
 
-    this.formCartao = this.formBuilder.group({
-      nome: 'Joao',
-      uf: 'ES',
-      cidade: 'Cariacica',
-      email: 'saa@b.com.br',
-      destinatario: 'Maria',
-      mensagem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      modeloSelecionado: '1',
-      efeitoSelecionado: '1'
-    })
+    // this.formCartao = this.formBuilder.group({
+    //   nome: 'Joao',
+    //   uf: 'ES',
+    //   cidade: 'Cariacica',
+    //   email: 'saa@b.com.br',
+    //   destinatario: 'Maria',
+    //   mensagem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    //   modeloSelecionado: '1',
+    //   efeitoSelecionado: '1'
+    // })
 
 
     this.carregaUfs();
@@ -98,8 +98,6 @@ export class CriarCartao {
       this.opcoesEfeito = r;
       console.log(this.opcoesEfeito);
     });
-
-
 
     // this.filtraCidades();
     // this.cidadesFiltradas = this.formCartao.get('cidade')!.valueChanges.pipe(

@@ -15,7 +15,8 @@ mat-label{
   flex-direction: column;
   // min-width: 50%;
   margin: auto;
-  width: 50em;
+  max-width: 50em;
+  width: 80%;
   // flex-wrap: wrap;
 
 
@@ -87,6 +88,22 @@ mat-label{
     }
   }
 
+  .dest-rem{
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+
+    .form-dest-rem{
+      width: 100%;
+    }
+  }
+
+  .example-form-field{
+    // background-color: red;
+    // padding: 10px;
+    width: 100%;
+  }
+
   .carousel {
     display: flex;
     gap: 12px;
@@ -127,10 +144,15 @@ mat-label{
   margin-bottom: 32px;
   position: relative;
   overflow: hidden;
+  margin: auto;
+  // max-width: 50em;
+  width: 80%;
   app-flocos-neve {
     // overflow: hidden;
-    position: fixed;
-    margin-top: -25%;
+    // position: fixed;
+    margin-top: -50%;
+    // margin-left: -15%;
+    // width: 80%;
   }
   h1{
     text-align: center;
@@ -140,23 +162,29 @@ mat-label{
       position: relative;
       // display: inline-block;
       overflow: hidden; /* Corta o excesso de zoom */
+      // max-width: 50em;
       width: 80%;
       margin: auto;
+      // max-width: 50em;
+      // width: 80%;
+      text-align: center;
     img{
       // margin: auto;
       // display: block;
       width: 100%;
+      height: 100%;
       object-fit: cover;
       /* Aplica a animação no elemento img */
-      animation: imageZoom 30s infinite alternate;
+      animation: imageZoom 10s infinite alternate;
+      transform-origin: center center;
     }
 
     @keyframes imageZoom {
       0% {
-          transform: scale(1.05) translate(0%, 0%);
+          transform: scale(1.0);
       }
       100% {
-          transform: scale(1.15) translate(5%, 5%);
+          transform: scale(1.15);
       }
     }
 
@@ -231,30 +259,91 @@ mat-label{
   }
   }
 
+  .preview {
+      
+    .cartao-preview{
+      // max-width: 50em;
+      // width: 80%;
+      .mensagem{
+        // width: 80%;
+        font-size: 1rem;
+      }
+      .nome, .nome-destinatario{
+        font-size: 1.2rem;
+        color: #F8F8F8;
+        margin-left: 16px;
+      }
+
+      .feliz-natal{
+        margin-top: 32px;
+        color: #FFD700;
+        font-size: 1.5rem;
+        // color: #F0E68C ;
+        // color: #B22222 ;
+        // color: #8B0000 ;
+      }
+    }
+  }
+
   @media (max-width: 1024px){
+    .form {
+      width: 80%;
+      .modelos-cartao{
+
+        .modelo-cartao{
+          width: 150px;
+
+        }
+      }
+
+      // .modelo-efeito{
+      //   display: flex;
+      //   flex-direction: column;
+      // }
+    }
+
     .preview {
-
+      
       .cartao-preview{
-        width: 95%;
         .mensagem{
-          width: 80%;
           font-size: 0.8rem;
-        }
-        .nome, .nome-destinatario{
-          font-size: 1.2rem;
-          color: #F8F8F8;
-          margin-left: 16px;
-        }
-
-        .feliz-natal{
-          margin-top: 32px;
-          color: #FFD700;
-          font-size: 1.5rem;
-          // color: #F0E68C ;
-          // color: #B22222 ;
-          // color: #8B0000 ;
         }
       }
     }
+    
+  }
 
+  @media (max-width: 600px){
+    .form {
+      width: 80%;
+      .modelos-cartao{
+
+        .modelo-cartao{
+          width: 120px;
+
+        }
+      }
+
+      .modelo-efeito{
+        display: flex;
+        flex-direction: column;
+        // background-color: red;
+      }
+
+      .dest-rem{
+        display: flex;
+        flex-direction: column;
+        gap: 0px;
+      }
+    }
+
+    .preview {
+      
+      .cartao-preview{
+        .mensagem{
+          font-size: 0.6rem;
+        }
+      }
+    }
+    
   }

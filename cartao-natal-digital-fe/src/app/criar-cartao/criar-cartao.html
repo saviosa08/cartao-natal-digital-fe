@@ -66,25 +66,27 @@
       }
     </mat-button-toggle-group>
 
-    <mat-form-field>
-      <mat-label>Seu Nome</mat-label>
-      <input id="inputText" matInput type="text" formControlName="nome" />
-      @if (value) {
-      <button matSuffix matIconButton aria-label="Clear" (click)="value = ''">
-        <mat-icon>close</mat-icon>
-      </button>
-      }
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Nome do Remetente</mat-label>
-      <input id="inputText" matInput type="text" formControlName="destinatario" />
-      @if (value) {
-      <button matSuffix matIconButton aria-label="Clear" (click)="value = ''">
-        <mat-icon>close</mat-icon>
-      </button>
-      }
-    </mat-form-field>
+    <div class="dest-rem">
+      <mat-form-field class="form-dest-rem">
+        <mat-label>Seu Nome</mat-label>
+        <input id="inputText" matInput type="text" formControlName="nome" />
+        <!-- @if (value) { -->
+        <button matSuffix matIconButton aria-label="Clear" (click)="value = ''">
+          <mat-icon>close</mat-icon>
+        </button>
+        <!-- } -->
+      </mat-form-field>
+  
+      <mat-form-field class="form-dest-rem" >
+        <mat-label>Nome do Remetente</mat-label>
+        <input id="inputText" matInput type="text" formControlName="destinatario" />
+        <!-- @if (value) { -->
+        <button matSuffix matIconButton aria-label="Clear" (click)="value = ''">
+          <mat-icon>close</mat-icon>
+        </button>
+        <!-- } -->
+      </mat-form-field>
+    </div>
 
     <mat-form-field class="example-form-field">
       <mat-label>Mensagem</mat-label>
@@ -108,7 +110,7 @@
     <!-- (click)="scrollCarousel(-1) -->
   </form>
 
-  @if(this.formCartao.get('modeloSelecionado')?.value && this.formCartao.valid){
+  @if(this.formCartao.get('modeloSelecionado')?.value ){
   <section class="preview">
 
     <h1>Veja como vai ficar</h1>
