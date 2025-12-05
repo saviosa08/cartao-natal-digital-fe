@@ -6,7 +6,7 @@ mat-label{
   color: var(--color-verm-destaque);
 }
 
-#inputText {
+.inputText {
   color: var(--color-verm-destaque);
 }
 
@@ -175,7 +175,7 @@ mat-label{
       height: 100%;
       object-fit: cover;
       /* Aplica a animação no elemento img */
-      animation: imageZoom 10s infinite alternate;
+      animation: imageZoom 20s infinite alternate;
       transform-origin: center center;
     }
 
@@ -200,6 +200,7 @@ mat-label{
       color: white;
       line-break: anywhere;
       white-space: pre-line;
+      width: 80%;
     }
 
     .feliz-natal{
@@ -209,6 +210,7 @@ mat-label{
       transform: translateX(-50%);
       font-size: 32px;
       font-weight: bold;
+      margin-top: 16px;
       // color: var(--color-verm-destaque);
     }
 
@@ -250,40 +252,40 @@ mat-label{
     .feliz-natal{
       margin-top: 32px;
       color: #FFD700;
-      font-size: 4.5em;
+      font-size: 2.5rem;
       // color: #F0E68C ;
       // color: #B22222 ;
       // color: #8B0000 ;
     }
 
   }
-  }
+}
 
-  .preview {
+  // .preview {
       
-    .cartao-preview{
-      // max-width: 50em;
-      // width: 80%;
-      .mensagem{
-        // width: 80%;
-        font-size: 1rem;
-      }
-      .nome, .nome-destinatario{
-        font-size: 1.2rem;
-        color: #F8F8F8;
-        margin-left: 16px;
-      }
+  //   .cartao-preview{
+  //     // max-width: 50em;
+  //     // width: 80%;
+  //     .mensagem{
+  //       // width: 80%;
+  //       font-size: 1.5rem;
+  //     }
+      // .nome, .nome-destinatario{
+      //   font-size: 2.5rem;
+      //   color: #F8F8F8;
+      //   margin-left: 16px;
+      // }
 
-      .feliz-natal{
-        margin-top: 32px;
-        color: #FFD700;
-        font-size: 1.5rem;
-        // color: #F0E68C ;
-        // color: #B22222 ;
-        // color: #8B0000 ;
-      }
-    }
-  }
+      // .feliz-natal{
+      //   margin-top: 32px;
+      //   color: #FFD700;
+      //   font-size: 2.5rem;
+      //   // color: #F0E68C ;
+      //   // color: #B22222 ;
+      //   // color: #8B0000 ;
+      // }
+    // }
+  // }
 
   @media (max-width: 1024px){
     .form {
@@ -307,6 +309,9 @@ mat-label{
       .cartao-preview{
         .mensagem{
           font-size: 0.8rem;
+        }
+        .nome, .nome-destinatario, .feliz-natal{
+          font-size: 1.5rem;
         }
       }
     }
@@ -338,10 +343,18 @@ mat-label{
     }
 
     .preview {
-      
+      width: 100%;
       .cartao-preview{
         .mensagem{
           font-size: 0.6rem;
+        }
+        .nome, .nome-destinatario{
+          font-size: 1.5rem;
+        }
+
+        .feliz-natal{
+          font-size: 1.2rem;
+          bottom: 0%
         }
       }
     }

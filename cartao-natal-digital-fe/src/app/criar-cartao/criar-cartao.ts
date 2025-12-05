@@ -46,6 +46,7 @@ export class CriarCartao {
   opcoesEfeito: EfeitoCartao[] = [];
   cartaoSelecionado!: ModeloCartao;
   opcaoSelecionada!: EfeitoCartao;
+  mostraPreview = false;
 
   @ViewChild('carousel', { static: false }) carousel!: ElementRef<HTMLDivElement>;
 
@@ -67,7 +68,7 @@ export class CriarCartao {
       destinatario: new FormControl('', [Validators.required]),
       mensagem: new FormControl('', [Validators.required]),
       modeloSelecionado: new FormControl('', [Validators.required]),
-      efeitoSelecionado: new FormControl(0, [Validators.required]),
+      efeitoSelecionado: new FormControl([Validators.required]),
     });
 
     // this.formCartao = this.formBuilder.group({
@@ -119,9 +120,24 @@ export class CriarCartao {
   }
 
   selecionarEfeito(id: number){
-    console.log("Efeito selecionado");
     this.formCartao.get('efeitoSelecionado')?.setValue(id);
     this.opcaoSelecionada = this.opcoesEfeito.find(e => e.id === this.formCartao.get('efeitoSelecionado')?.value)!;
+    console.log("Efeito selecionado", this.formCartao.get('efeitoSelecionado')?.value);
+  }
+
+  verificaPreview(){
+    if (
+        this.formCartao.get('modeloSelecionado')?.value &&
+        this.formCartao.get('nome')?.value &&     
+        this.formCartao.get('destinatario')?.value &&
+        this.formCartao.get('mensagem')?.value  &&
+        this.formCartao.get('efeitoSelecionado')?.value     
+    ){
+      return true;
+    } else {
+      return false;
+    }
+    
   }
 
   filtraCidades(){

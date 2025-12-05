@@ -69,7 +69,7 @@
     <div class="dest-rem">
       <mat-form-field class="form-dest-rem">
         <mat-label>Seu Nome</mat-label>
-        <input id="inputText" matInput type="text" formControlName="nome" />
+        <input id="rem-input" class="inputText" matInput type="text" formControlName="nome" />
         <!-- @if (value) { -->
         <button matSuffix matIconButton aria-label="Clear" (click)="value = ''">
           <mat-icon>close</mat-icon>
@@ -79,7 +79,7 @@
   
       <mat-form-field class="form-dest-rem" >
         <mat-label>Nome do Remetente</mat-label>
-        <input id="inputText" matInput type="text" formControlName="destinatario" />
+        <input id="dest-input" class="inputText" matInput type="text" formControlName="destinatario" />
         <!-- @if (value) { -->
         <button matSuffix matIconButton aria-label="Clear" (click)="value = ''">
           <mat-icon>close</mat-icon>
@@ -110,7 +110,7 @@
     <!-- (click)="scrollCarousel(-1) -->
   </form>
 
-  @if(this.formCartao.get('modeloSelecionado')?.value ){
+  @if(verificaPreview()){
   <section class="preview">
 
     <h1>Veja como vai ficar</h1>
@@ -126,10 +126,7 @@
         <span class="nome-destinatario">{{ formCartao.get('destinatario')?.value }}</span>
         <br />
         {{ formCartao.get('mensagem')?.value }}
-        <br /><br />
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusaus magnam dicta maxime quas
-        repellendus reiciendis nihiml assumenda, et magni ipsum odit blanditiis doloribus quasi,
-        mollitia harum fugiat autem! Aspernatur, temporibus.
+        <br />
         <br />
         Com carinho, <span class="nome">{{ formCartao.get('nome')?.value }}</span>
       </p>
@@ -182,7 +179,7 @@
 
   <button
     class="btn-finalizar"
-    style="display: block; margin: auto"
+    style="display: block; margin: 16px auto;"
     matButton="filled"
     (click)="onSubmit()"
   >
