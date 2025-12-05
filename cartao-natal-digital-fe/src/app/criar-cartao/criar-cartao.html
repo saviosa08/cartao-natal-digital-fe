@@ -70,21 +70,21 @@
       <mat-form-field class="form-dest-rem">
         <mat-label>Seu Nome</mat-label>
         <input id="inputText" matInput type="text" formControlName="nome" />
-        @if (value) {
+        <!-- @if (value) { -->
         <button matSuffix matIconButton aria-label="Clear" (click)="value = ''">
           <mat-icon>close</mat-icon>
         </button>
-        }
+        <!-- } -->
       </mat-form-field>
   
       <mat-form-field class="form-dest-rem" >
         <mat-label>Nome do Remetente</mat-label>
         <input id="inputText" matInput type="text" formControlName="destinatario" />
-        @if (value) {
+        <!-- @if (value) { -->
         <button matSuffix matIconButton aria-label="Clear" (click)="value = ''">
           <mat-icon>close</mat-icon>
         </button>
-        }
+        <!-- } -->
       </mat-form-field>
     </div>
 
@@ -110,7 +110,7 @@
     <!-- (click)="scrollCarousel(-1) -->
   </form>
 
-  @if(this.formCartao.get('modeloSelecionado')?.value && this.formCartao.valid){
+  @if(this.formCartao.get('modeloSelecionado')?.value ){
   <section class="preview">
 
     <h1>Veja como vai ficar</h1>
