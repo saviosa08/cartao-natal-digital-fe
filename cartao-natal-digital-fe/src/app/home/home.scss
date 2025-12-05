@@ -661,6 +661,8 @@ footer{
       border-radius: 8px;
       z-index: 50;
     }
+    
+    
   }
 
   header{
@@ -706,8 +708,11 @@ footer{
   .how-it-works li,
   .proofs li{
     width: calc(100% - 32px);
-    max-width: 520px;
+    max-width: 300px;
     margin: 0 auto;
+    p{
+      text-align: center;
+    }
   }
 
   .questions div{
@@ -740,6 +745,13 @@ footer{
   .icon-feature{
     display: flex;
     flex-wrap: wrap;
+  }
+
+  .questions div{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    width: 70%;
   }
 }
 

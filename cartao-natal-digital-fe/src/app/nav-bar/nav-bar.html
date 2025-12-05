@@ -8,7 +8,7 @@
           [attr.aria-expanded]="menuOpen"
           aria-controls="main-nav"
           aria-label="Abrir menu de navegação">
-    <mat-icon aria-hidden="true">menu</mat-icon>
+    <mat-icon aria-hidden="true"> {{menuOpen ? 'close' : 'menu'}}</mat-icon>
   </button>
 
   <ul id="main-nav" [class.open]="menuOpen" [attr.aria-hidden]="!menuOpen">
