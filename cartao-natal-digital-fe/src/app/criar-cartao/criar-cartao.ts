@@ -99,7 +99,7 @@ export class CriarCartao implements AfterViewInit {
       destinatario: new FormControl('', [Validators.required]),
       mensagem: new FormControl('', [Validators.required]),
       modeloSelecionado: new FormControl('', [Validators.required]),
-      efeitoSelecionado: new FormControl([Validators.required]),
+      efeitoSelecionado: new FormControl([0, Validators.required]),
     });
 
     // this.formCartao = this.formBuilder.group({
@@ -138,7 +138,6 @@ export class CriarCartao implements AfterViewInit {
     //   startWith(''),
     //   map(value => this._filterCidade(value || ''))
     // );
-
 
   }
 
@@ -182,7 +181,7 @@ export class CriarCartao implements AfterViewInit {
         this.formCartao.get('nome')?.value &&
         this.formCartao.get('destinatario')?.value &&
         this.formCartao.get('mensagem')?.value  &&
-        this.formCartao.get('efeitoSelecionado')?.value
+        this.formCartao.get('efeitoSelecionado')?.value >= 0
     ){
       return true;
     } else {

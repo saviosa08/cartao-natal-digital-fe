@@ -25,8 +25,18 @@
     "imagem": "assets/modelos-cartao/modelo-6.png"
   },
   {
+    "id": 7,
+    "nome": "Modelo 7",
+    "imagem": "assets/modelos-cartao/modelo-7.png"
+  },
+  {
     "id": 8,
     "nome": "Modelo 8",
     "imagem": "assets/modelos-cartao/modelo-8.png"
+  },
+  {
+    "id": 9,
+    "nome": "Modelo 9",
+    "imagem": "assets/modelos-cartao/modelo-9.png"
   }
 ]

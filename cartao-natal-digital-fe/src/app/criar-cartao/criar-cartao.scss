@@ -153,8 +153,10 @@ mat-label{
     // overflow: hidden;
     // position: fixed;
     margin-top: -50%;
-    // margin-left: -15%;
+    font-size: 1.1rem;
+    margin-left: -5%;
     // width: 80%;
+    // height: 100%;
   }
   h1{
     text-align: center;
@@ -319,6 +321,16 @@ mat-label{
 
     .preview {
 
+      app-flocos-neve {
+      // overflow: hidden;
+      // position: fixed;
+      margin-top: -50%;
+      font-size: 0.8rem;
+      // transform: scale(2);
+      // margin-left: -15%;
+      // width: 80%;
+    }
+
       .cartao-preview{
         .mensagem{
           font-size: 0.8rem;
@@ -357,6 +369,17 @@ mat-label{
 
     .preview {
       width: 100%;
+
+       app-flocos-neve {
+        // overflow: hidden;
+        // position: fixed;
+        margin-top: -150%;
+        font-size: 0.5rem;
+        // transform: scale(2);
+        // margin-left: -15%;
+        // width: 80%;
+      }
+
       .cartao-preview{
         .mensagem{
           font-size: 0.6rem;
