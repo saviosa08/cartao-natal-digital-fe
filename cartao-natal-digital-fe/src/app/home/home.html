@@ -13,8 +13,8 @@
       <strong>Instantâneo:</strong> entrega por link
       </p> -->
 
-      <button matButton="filled">
-        <a class="cta" href="/criar-cartao"  role="button" aria-label="Criar meu cartão de Natal agora">✨ Criar meu cartão</a>
+      <button class="cta" matButton="filled" (click)="navegarCriarCartao()">
+        ✨ Criar meu cartão
       </button>
 
 
@@ -101,8 +101,9 @@
       <p><strong>Mais de 1.200 cartões criados</strong> para este Natal — 4.9/5 satisfação média</p>
     </div>
 
-    <button matButton="filled">
-      <a class="cta cta-lg" href="/criar-cartao" role="button" aria-label="Começar a criar meu cartão de Natal">✨ Criar meu cartão agora</a>
+    <button class="cta" matButton="filled" (click)="navegarCriarCartao()">
+      <!-- <a class="cta cta-lg" href="/criar-cartao" role="button" aria-label="Começar a criar meu cartão de Natal"></a> -->
+       ✨ Criar meu cartão agora
     </button>
   </article>
 

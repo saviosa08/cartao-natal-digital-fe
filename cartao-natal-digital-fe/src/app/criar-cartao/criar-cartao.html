@@ -1,6 +1,6 @@
 <app-nav-bar></app-nav-bar>
-<main>
-  <h1 style="text-align: center">Crie seu cartão premium por R$ 9,99</h1>
+<main id="inicio">
+  <h1 style="text-align: center; line-height: 1;">Crie seu cartão premium por R$ 9,90</h1>
 
   <form [formGroup]="formCartao" class="form">
     <h2>Selecione o modelo</h2>
@@ -11,10 +11,11 @@
         class="carousel-nav prev"
         aria-label="Anterior"
         (click)="scrollCarousel(-1)"
+        [disabled]="isAtStart"
       >
         <mat-icon>chevron_left</mat-icon>
       </button>
-      <div class="carousel" #carousel>
+      <div class="carousel" #carousel (scroll)="onCarouselScroll()">
         @for (card of modelosCartao; track card.id) {
         <!-- <div class="carousel-item"> -->
         <!-- <mat-card
@@ -39,6 +40,7 @@
         class="carousel-nav next"
         aria-label="Próximo"
         (click)="scrollCarousel(1)"
+        [disabled]="isAtEnd"
       >
         <mat-icon>chevron_right</mat-icon>
       </button>
@@ -76,7 +78,7 @@
         </button>
         <!-- } -->
       </mat-form-field>
-  
+
       <mat-form-field class="form-dest-rem" >
         <mat-label>Nome do Remetente</mat-label>
         <input id="dest-input" class="inputText" matInput type="text" formControlName="destinatario" />

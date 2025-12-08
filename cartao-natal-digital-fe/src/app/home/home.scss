@@ -81,25 +81,20 @@ header{
     border-radius: 8px;
   }
 
-  button{
+  .cta{
     // background-color: darkgreen;
     background-color: var(--bg-buttom);
     border: none;
     padding: 12px 24px;
     margin-top: 32px;
-    // border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s;
     box-shadow: 1px 1px 5px black;
+    text-decoration: none;
+    color: var(--txt-primary);
 
     &:hover{
       background-color: var(--bg-buttom-hv);
-
-    }
-
-    .cta{
-    text-decoration: none;
-    color: var(--txt-primary);
     }
   }
 
@@ -661,8 +656,8 @@ footer{
       border-radius: 8px;
       z-index: 50;
     }
-    
-    
+
+
   }
 
   header{

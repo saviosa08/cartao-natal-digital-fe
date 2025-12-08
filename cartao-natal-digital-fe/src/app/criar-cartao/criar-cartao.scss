@@ -66,6 +66,8 @@ mat-label{
 
     button{
       background-color: var(--bg-buttom);
+      color: var(--txt-primary);
+      box-shadow: 1px 1px 5px black;
     }
   }
 
@@ -261,8 +263,19 @@ mat-label{
   }
 }
 
+.btn-finalizar{
+  background-color: var(--bg-buttom) !important;
+  color: var(--txt-primary) !important;
+  transition: background-color 0.3s;
+  box-shadow: 1px 1px 5px black;
+
+  &:hover{
+      background-color: var(--bg-buttom-hv) !important;
+    }
+}
+
   // .preview {
-      
+
   //   .cartao-preview{
   //     // max-width: 50em;
   //     // width: 80%;
@@ -305,7 +318,7 @@ mat-label{
     }
 
     .preview {
-      
+
       .cartao-preview{
         .mensagem{
           font-size: 0.8rem;
@@ -315,7 +328,7 @@ mat-label{
         }
       }
     }
-    
+
   }
 
   @media (max-width: 600px){
@@ -358,5 +371,5 @@ mat-label{
         }
       }
     }
-    
+
   }
