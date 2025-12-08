@@ -1,6 +1,6 @@
 <app-nav-bar></app-nav-bar>
-<main>
-  <h1 style="text-align: center">Crie o seu cartão premium</h1>
+<main id="inicio">
+  <h1 style="text-align: center; line-height: 1;">Crie seu cartão premium por R$ 9,90</h1>
 
   <form [formGroup]="formCartao" class="form">
     <h2>Selecione o modelo</h2>
@@ -11,10 +11,11 @@
         class="carousel-nav prev"
         aria-label="Anterior"
         (click)="scrollCarousel(-1)"
+        [disabled]="isAtStart"
       >
         <mat-icon>chevron_left</mat-icon>
       </button>
-      <div class="carousel" #carousel>
+      <div class="carousel" #carousel (scroll)="onCarouselScroll()">
         @for (card of modelosCartao; track card.id) {
         <!-- <div class="carousel-item"> -->
         <!-- <mat-card
@@ -39,6 +40,7 @@
         class="carousel-nav next"
         aria-label="Próximo"
         (click)="scrollCarousel(1)"
+        [disabled]="isAtEnd"
       >
         <mat-icon>chevron_right</mat-icon>
       </button>
@@ -69,17 +71,17 @@
     <div class="dest-rem">
       <mat-form-field class="form-dest-rem">
         <mat-label>Seu Nome</mat-label>
-        <input id="inputText" matInput type="text" formControlName="nome" />
+        <input id="rem-input" class="inputText" matInput type="text" formControlName="nome" />
         <!-- @if (value) { -->
         <button matSuffix matIconButton aria-label="Clear" (click)="value = ''">
           <mat-icon>close</mat-icon>
         </button>
         <!-- } -->
       </mat-form-field>
-  
+
       <mat-form-field class="form-dest-rem" >
         <mat-label>Nome do Remetente</mat-label>
-        <input id="inputText" matInput type="text" formControlName="destinatario" />
+        <input id="dest-input" class="inputText" matInput type="text" formControlName="destinatario" />
         <!-- @if (value) { -->
         <button matSuffix matIconButton aria-label="Clear" (click)="value = ''">
           <mat-icon>close</mat-icon>
@@ -110,7 +112,7 @@
     <!-- (click)="scrollCarousel(-1) -->
   </form>
 
-  @if(this.formCartao.get('modeloSelecionado')?.value ){
+  @if(verificaPreview()){
   <section class="preview">
 
     <h1>Veja como vai ficar</h1>
@@ -126,10 +128,7 @@
         <span class="nome-destinatario">{{ formCartao.get('destinatario')?.value }}</span>
         <br />
         {{ formCartao.get('mensagem')?.value }}
-        <br /><br />
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusaus magnam dicta maxime quas
-        repellendus reiciendis nihiml assumenda, et magni ipsum odit blanditiis doloribus quasi,
-        mollitia harum fugiat autem! Aspernatur, temporibus.
+        <br />
         <br />
         Com carinho, <span class="nome">{{ formCartao.get('nome')?.value }}</span>
       </p>
@@ -182,11 +181,11 @@
 
   <button
     class="btn-finalizar"
-    style="display: block; margin: auto"
+    style="display: block; margin: 16px auto;"
     matButton="filled"
     (click)="onSubmit()"
   >
-    <span>✨ Gerar meu cartão</span>
+    <span>✨ Comprar agora por R$9,90</span>
   </button>
 </main>
 <app-footer></app-footer>

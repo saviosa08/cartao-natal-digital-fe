@@ -1,5 +1,5 @@
 import { CommonModule, AsyncPipe } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import {MatInputModule} from '@angular/material/input';
 import { FormBuilder, FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
@@ -22,11 +22,11 @@ import { Footer } from "../footer/footer";
 @Component({
   selector: 'app-criar-cartao',
   standalone: true,
-  imports: [MatInputModule, FormsModule, MatIcon, MatButtonModule, MatSelectModule, ReactiveFormsModule, MatAutocompleteModule, CommonModule, AsyncPipe, MatGridListModule, MatCardModule, MatButtonToggleModule, FlocosNeve, NavBar, Footer],
+  imports: [MatInputModule, FormsModule, MatIcon, MatButtonModule, MatSelectModule, ReactiveFormsModule, MatAutocompleteModule, CommonModule, MatGridListModule, MatCardModule, MatButtonToggleModule, FlocosNeve, NavBar, Footer],
   templateUrl: './criar-cartao.html',
   styleUrl: './criar-cartao.scss',
 })
-export class CriarCartao {
+export class CriarCartao implements AfterViewInit {
 
   constructor(
       private formBuilder: FormBuilder,
@@ -46,15 +46,47 @@ export class CriarCartao {
   opcoesEfeito: EfeitoCartao[] = [];
   cartaoSelecionado!: ModeloCartao;
   opcaoSelecionada!: EfeitoCartao;
+  mostraPreview = false;
 
   @ViewChild('carousel', { static: false }) carousel!: ElementRef<HTMLDivElement>;
+
+  // state for disabling nav buttons when at the ends
+  isAtStart = true;
+  isAtEnd = false;
 
   // Scroll the carousel container left or right. direction: -1 (prev) or 1 (next)
   scrollCarousel(direction: number) {
     if (!this.carousel) return;
     const el = this.carousel.nativeElement;
     const scrollAmount = Math.round(el.clientWidth * 0.8);
-    el.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+
+    // compute clamped target to avoid blank space beyond the first/last item
+    const maxScrollLeft = Math.max(0, el.scrollWidth - el.clientWidth);
+    const target = Math.max(0, Math.min(el.scrollLeft + direction * scrollAmount, maxScrollLeft));
+
+    // if we're already at the edge and target equals current, do nothing
+    if (target === el.scrollLeft) return;
+
+    el.scrollTo({ left: target, behavior: 'smooth' });
+
+    // update state after a short delay (smooth scroll will trigger scroll events too)
+    setTimeout(() => this.updateCarouselState(), 250);
+  }
+
+  onCarouselScroll() {
+    // called from template (scroll event)
+    this.updateCarouselState();
+  }
+
+  private updateCarouselState() {
+    if (!this.carousel) return;
+    const el = this.carousel.nativeElement;
+    const max = Math.max(0, el.scrollWidth - el.clientWidth);
+    const left = el.scrollLeft;
+    // consider a small epsilon to handle sub-pixel values
+    const eps = 2;
+    this.isAtStart = left <= eps;
+    this.isAtEnd = left >= max - eps;
   }
 
   ngOnInit() {
@@ -67,7 +99,7 @@ export class CriarCartao {
       destinatario: new FormControl('', [Validators.required]),
       mensagem: new FormControl('', [Validators.required]),
       modeloSelecionado: new FormControl('', [Validators.required]),
-      efeitoSelecionado: new FormControl(0, [Validators.required]),
+      efeitoSelecionado: new FormControl([Validators.required]),
     });
 
     // this.formCartao = this.formBuilder.group({
@@ -93,6 +125,8 @@ export class CriarCartao {
     this.http.get<ModeloCartao[]>('assets/data/modelos-cartao.json').subscribe(r => {
       this.modelosCartao = r;
       console.log(this.modelosCartao);
+      // update carousel state after modelos are rendered
+      setTimeout(() => this.updateCarouselState(), 100);
     });
     this.http.get<EfeitoCartao[]>('assets/data/efeito.json').subscribe(r => {
       this.opcoesEfeito = r;
@@ -104,6 +138,24 @@ export class CriarCartao {
     //   startWith(''),
     //   map(value => this._filterCidade(value || ''))
     // );
+
+
+  }
+
+  ngAfterViewInit(): void {
+    // scroll to element with id 'inicio' when entering the page
+    // small timeout ensures DOM and any route fragments have settled
+    setTimeout(() => {
+      try {
+        const el = document.getElementById('inicio');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } catch (e) {
+        // safe-noop if document not available
+        console.warn('Could not scroll to #inicio', e);
+      }
+    }, 60);
   }
 
   // filter(): void {
@@ -119,9 +171,24 @@ export class CriarCartao {
   }
 
   selecionarEfeito(id: number){
-    console.log("Efeito selecionado");
     this.formCartao.get('efeitoSelecionado')?.setValue(id);
     this.opcaoSelecionada = this.opcoesEfeito.find(e => e.id === this.formCartao.get('efeitoSelecionado')?.value)!;
+    console.log("Efeito selecionado", this.formCartao.get('efeitoSelecionado')?.value);
+  }
+
+  verificaPreview(){
+    if (
+        this.formCartao.get('modeloSelecionado')?.value &&
+        this.formCartao.get('nome')?.value &&
+        this.formCartao.get('destinatario')?.value &&
+        this.formCartao.get('mensagem')?.value  &&
+        this.formCartao.get('efeitoSelecionado')?.value
+    ){
+      return true;
+    } else {
+      return false;
+    }
+
   }
 
   filtraCidades(){
