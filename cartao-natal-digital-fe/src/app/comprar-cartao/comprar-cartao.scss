@@ -1,0 +1,17 @@
+main{
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+
+    
+}
+
+.btn-cancel{
+    background-color: none;
+    color: var(--txt-secondary)
+}
+
+.btn-comprar{
+    background-color: var(--bg-buttom);
+    color: var(--txt-secondary);
+    box-shadow: 1px 1px 8px black;
+}

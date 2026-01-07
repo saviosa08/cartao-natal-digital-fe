@@ -1,22 +1,26 @@
-import { CommonModule, AsyncPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import {MatInputModule} from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, FormControl, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatSelectModule} from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 import { CidadeServiceService } from '../services/cidadeService/cidade-service.service';
 import { Cidade, Uf } from '../interfaces/cidades';
-import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable, map, startWith } from 'rxjs';
-import {MatGridListModule} from '@angular/material/grid-list';
-import {MatCardModule} from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
 import { EfeitoCartao, ModeloCartao } from '../interfaces/opcoesCartao';
 import { HttpClient } from '@angular/common/http';
-import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FlocosNeve } from "../flocos-neve/flocos-neve";
 import { NavBar } from "../nav-bar/nav-bar";
 import { Footer } from "../footer/footer";
+import { ComprarCartao } from '../comprar-cartao/comprar-cartao';
+import { MatDialog } from '@angular/material/dialog';
+
+
 
 
 @Component({
@@ -29,17 +33,18 @@ import { Footer } from "../footer/footer";
 export class CriarCartao implements AfterViewInit {
 
   constructor(
-      private formBuilder: FormBuilder,
-      private cidadeService: CidadeServiceService,
-      private http: HttpClient
-    ) {}
+    private formBuilder: FormBuilder,
+    private cidadeService: CidadeServiceService,
+    private http: HttpClient,
+    private dialog: MatDialog
+  ) { }
 
   formCartao!: FormGroup;
 
   ufs: Uf[] = [];
 
   cidades: Cidade[] = [];
-  cidadesFiltradas!: Observable<Cidade[]>
+  cidadesFiltradas!: Observable<Cidade[]>;
   cidadeForm = new FormControl();
   cidadeSelecionada!: string;
   modelosCartao: ModeloCartao[] = [];
@@ -93,9 +98,9 @@ export class CriarCartao implements AfterViewInit {
 
     this.formCartao = this.formBuilder.group({
       nome: new FormControl('', [Validators.required]),
-      uf: new FormControl('', [Validators.required]),
+      uf: new FormControl(''),
       cidade: new FormControl({ value: this.cidadeForm, disabled: true }, [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl(''),
       destinatario: new FormControl('', [Validators.required]),
       mensagem: new FormControl('', [Validators.required]),
       modeloSelecionado: new FormControl('', [Validators.required]),
@@ -112,14 +117,12 @@ export class CriarCartao implements AfterViewInit {
     //   modeloSelecionado: '1',
     //   efeitoSelecionado: '1'
     // })
-
-
     this.carregaUfs();
 
-    this.cidadeForm.valueChanges.subscribe( vlr => {
-        this.cidadeSelecionada && vlr != this.cidadeSelecionada ?
+    this.cidadeForm.valueChanges.subscribe(vlr => {
+      this.cidadeSelecionada && vlr != this.cidadeSelecionada ?
         this.formCartao.get('cidade')?.setValue('') :
-        false
+        false;
     });
 
     this.http.get<ModeloCartao[]>('assets/data/modelos-cartao.json').subscribe(r => {
@@ -138,7 +141,6 @@ export class CriarCartao implements AfterViewInit {
     //   startWith(''),
     //   map(value => this._filterCidade(value || ''))
     // );
-
   }
 
   ngAfterViewInit(): void {
@@ -162,27 +164,24 @@ export class CriarCartao implements AfterViewInit {
   //   console.log("Valor: ", filterValue);
   //   this.cidadesFiltradas = this.cidades.filter(o => o.nome.toLowerCase().includes(filterValue));
   // }
-
-  selecionarModelo(id:number){
+  selecionarModelo(id: number) {
     console.log("Modelo selecionado: ", id);
     this.formCartao.get('modeloSelecionado')?.setValue(id);
     this.cartaoSelecionado = this.modelosCartao.find(m => m.id === this.formCartao.get('modeloSelecionado')?.value)!;
   }
 
-  selecionarEfeito(id: number){
+  selecionarEfeito(id: number) {
     this.formCartao.get('efeitoSelecionado')?.setValue(id);
     this.opcaoSelecionada = this.opcoesEfeito.find(e => e.id === this.formCartao.get('efeitoSelecionado')?.value)!;
     console.log("Efeito selecionado", this.formCartao.get('efeitoSelecionado')?.value);
   }
 
-  verificaPreview(){
-    if (
-        this.formCartao.get('modeloSelecionado')?.value &&
-        this.formCartao.get('nome')?.value &&
-        this.formCartao.get('destinatario')?.value &&
-        this.formCartao.get('mensagem')?.value  &&
-        this.formCartao.get('efeitoSelecionado')?.value >= 0
-    ){
+  verificaPreview() {
+    if (this.formCartao.get('modeloSelecionado')?.value &&
+      this.formCartao.get('nome')?.value &&
+      this.formCartao.get('destinatario')?.value &&
+      this.formCartao.get('mensagem')?.value &&
+      this.formCartao.get('efeitoSelecionado')?.value >= 0) {
       return true;
     } else {
       return false;
@@ -190,18 +189,18 @@ export class CriarCartao implements AfterViewInit {
 
   }
 
-  filtraCidades(){
+  filtraCidades() {
     this.cidadesFiltradas = this.cidadeForm.valueChanges.pipe(
       startWith(''),
       map(value => this._filterCidade(value || ''))
     );
   }
 
-  limpaCidade(){
+  limpaCidade() {
     console.log("Cidade limpa!");
   }
 
-   private _filterCidade(value: string){
+  private _filterCidade(value: string) {
     const filterValue = value.toLowerCase();
 
     console.log('chamou filtro:');
@@ -210,61 +209,67 @@ export class CriarCartao implements AfterViewInit {
   }
 
 
-  carregaUfs(){
+  carregaUfs() {
     console.log('teste');
     this.cidadeService.getUfs().subscribe((data: Uf[]) => {
-        this.ufs = data;
-        console.log(this.ufs);
-      });
+      this.ufs = data;
+      console.log(this.ufs);
+    });
   }
 
-  ufChange(){
-    console.log("Valor: ",this.formCartao.get('uf')?.value);
+  ufChange() {
+    console.log("Valor: ", this.formCartao.get('uf')?.value);
     this.formCartao.get('cidade')?.reset();
     this.cidadeForm.reset();
 
-    if(this.formCartao.get('uf')?.value){
+    if (this.formCartao.get('uf')?.value) {
       this.formCartao.get('cidade')?.enable();
     } else {
       this.formCartao.get('cidade')?.disable();
     }
-      this.carregaCidades();
+    this.carregaCidades();
   }
 
-  carregaCidades(){
+  carregaCidades() {
     this.cidadeService.getCidades(this.formCartao.get('uf')?.value).subscribe((data: Cidade[]) => {
-        console.log(data);
-        this.cidades = data;
-        this.filtraCidades();
-      });
+      console.log(data);
+      this.cidades = data;
+      this.filtraCidades();
+    });
   }
 
-  onCidadeSelecionada(event: MatAutocompleteSelectedEvent){
+  onCidadeSelecionada(event: MatAutocompleteSelectedEvent) {
     this.cidadeSelecionada = event.option.value;
     this.formCartao.get('cidade')?.setValue(this.cidadeSelecionada);
   }
 
   onSubmit() {
-    if (!this.formCartao.valid) {
-      console.log(this.formCartao.value);
-
+    console.log("Formulário: ", this.formCartao.value)
+    if (this.formCartao.valid) {
+      const dialogRef = this.dialog.open(ComprarCartao, {
+        width: '500px',
+        disableClose: true, // impede fechar clicando fora
+        data: {
+          form: this.formCartao.value
+        }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('Dialog fechado:', result);
+      });
+  
     } else {
       console.log('Formulário inválido');
     }
   }
 
   value: string = 'Testeaa';
-  selectedCar: string ='';
-  selectedValue: string ='';
+  selectedCar: string = '';
+  selectedValue: string = '';
 
-  cars: Car[] = [
-    {value: 'volvo', viewValue: 'Volvo'},
-    {value: 'saab', viewValue: 'Saab'},
-    {value: 'mercedes', viewValue: 'Mercedes'},
-  ];
-}
-
-interface Car {
-  value: string;
-  viewValue: string;
+  // cars: Car[] = [
+  //   { value: 'volvo', viewValue: 'Volvo' },
+  //   { value: 'saab', viewValue: 'Saab' },
+  //   { value: 'mercedes', viewValue: 'Mercedes' },
+  // ];
 }
