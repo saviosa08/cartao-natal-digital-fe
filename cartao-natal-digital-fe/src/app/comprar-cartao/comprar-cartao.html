@@ -1,5 +1,67 @@
 <main>
-    <h2 mat-dialog-title>Install Angular</h2>
+    <h2 mat-dialog-title>Finalizar compra 🎄</h2>
+
+    <mat-dialog-content>
+    <p>Falta só um passo para enviar seu cartão de Natal digital</p>
+
+    <form [formGroup]="formCompra">
+        <!-- <mat-form-field appearance="outline" class="full-width">
+        <mat-label>E-mail</mat-label>
+        <input matInput formControlName="email">
+        <mat-error *ngIf="formCompra.get('email')?.invalid">
+            Informe um e-mail válido
+        </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+        <mat-label>UF (opcional)</mat-label>
+        <mat-select formControlName="uf">
+            <mat-option value="0">Não informar</mat-option>
+            <mat-option value="SP">SP</mat-option>
+            <mat-option value="RJ">RJ</mat-option>
+             demais estados
+        </mat-select>
+        </mat-form-field> -->
+
+        <mat-form-field style="width: 60%">
+            <mat-label>E-mail</mat-label>
+            <input id="inputText" matInput type="email" formControlName="email" />
+            <!-- @if (value) { -->
+            <button matSuffix matIconButton aria-label="Clear">
+                <!-- (click)="value = ''" -->
+              <mat-icon>close</mat-icon>
+            </button>
+            <!-- } -->
+        </mat-form-field>
+
+        <mat-form-field style="width: 12%">
+            <mat-label>UF</mat-label>
+            <select matNativeControl formControlName="uf"> 
+                <!-- (change)="ufChange()" -->
+              <option value="" selected></option>
+              @for (uf of ufs; track uf) {
+              <option [value]="uf.sigla">{{ uf.sigla }}</option>
+              }
+            </select>
+          </mat-form-field>
+
+        <div class="resumo">
+        <strong>Cartão de Natal Digital</strong><br>
+        Valor: R$ 9,99
+        </div>
+    </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-raised-button color="primary"
+            (click)="confirmarCompra()"
+            [disabled]="formCompra.invalid">
+        Comprar e ir para o pagamento
+    </button>
+    </mat-dialog-actions>
+
+    <!-- <h2 mat-dialog-title>Install Angular</h2>
     <mat-dialog-content class="mat-typography">
     <h3>Develop across all platforms</h3>
     <p>Learn one way to build applications with Angular and reuse your code and abilities to build
@@ -62,5 +124,5 @@
     <mat-dialog-actions align="end">
         <button matButton mat-dialog-close class="btn-cancel">Cancel</button>
         <button matButton [mat-dialog-close]="true" class="btn-comprar">Comprar</button>
-    </mat-dialog-actions>
+    </mat-dialog-actions> -->
 </main>
